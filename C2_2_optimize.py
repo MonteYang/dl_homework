@@ -288,10 +288,9 @@ def update_parameters_with_adam(parameters, grads, v, s, t, learning_rate=0.01,
         s["db" + str(l + 1)] = beta2 * s["db" + str(l + 1)] + (1 - beta2) * (grads["db" + str(l+1)] ** 2)
 
         s_corrected["dW"+str(l+1)] = s["dW" + str(l+1)] / (1 - beta2**t)
-        s_corrected["db"+str(l+1)] = s["dW" + str(l+1)] / (1 - beta2**t)
+        s_corrected["db"+str(l+1)] = s["db" + str(l+1)] / (1 - beta2**t)
 
-        parameters["W" + str(l + 1)] = parameters["W" + str(l + 1)] - learning_rate * (
-                    v_corrected["dW" + str(l + 1)] / (np.sqrt(s_corrected["dW" + str(l + 1)]) + epsilon))
+        parameters["W" + str(l + 1)] = parameters["W" + str(l + 1)] - learning_rate * (v_corrected["dW" + str(l + 1)] / (np.sqrt(s_corrected["dW" + str(l + 1)]) + epsilon))
         parameters["b" + str(l + 1)] = parameters["b" + str(l + 1)] - learning_rate * (
                     v_corrected["db" + str(l + 1)] / (np.sqrt(s_corrected["db" + str(l + 1)]) + epsilon))
 
@@ -341,7 +340,7 @@ def model(X, Y, layer_dims, optimizer, learning_rate=0.0007, mini_batch_size=64,
 
             print("第 {} 个minibatch ---- minibatch_X.shape = ".format(j), minibatch_X.shape)
             print("第 {} 个minibatch ---- parameters['W1'].shape=".format(j), parameters["W1"].shape)
-
+            print("第 {} 个minibatch ---- parameters['b1'].shape=".format(j), parameters["b1"].shape)
             a3, caches = forward_propagation(minibatch_X, parameters)
 
             cost = compute_cost(a3, minibatch_Y)
