@@ -128,7 +128,19 @@ def forward_propagation(X, parameters):
     b3 = parameters["b3"]
 
     # LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SIGMOID
+
+
+    X = X.reshape((X.shape[0], X.shape[1]))
+
+    for i in range(3):
+        exec("W{} = W{}.reshape((W{}.shape[0], W{}.shape[1]))".format(str(i+1), str(i+1), str(i+1), str(i+1)))
+        exec("b{} = b{}.reshape((b{}.shape[0], b{}.shape[1]))".format(str(i+1), str(i+1), str(i+1), str(i+1)))
+
+    print("W1.shape", W1.shape)
+    print("X.shape", X.shape)
+    print(b1)
     z1 = np.dot(W1, X) + b1
+
     a1 = relu(z1)
     z2 = np.dot(W2, a1) + b2
     a2 = relu(z2)

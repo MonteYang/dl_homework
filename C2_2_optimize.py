@@ -14,101 +14,101 @@ plt.rcParams['figure.figsize'] = (7.0, 4.0) # set default size of plots
 plt.rcParams['image.interpolation'] = 'nearest'
 plt.rcParams['image.cmap'] = 'gray'
 
-def update_parameters_with_gd_test_case():
-    np.random.seed(1)
-    learning_rate = 0.01
-    W1 = np.random.randn(2, 3)
-    b1 = np.random.randn(2, 1)
-    W2 = np.random.randn(3, 3)
-    b2 = np.random.randn(3, 1)
-
-    dW1 = np.random.randn(2, 3)
-    db1 = np.random.randn(2, 1)
-    dW2 = np.random.randn(3, 3)
-    db2 = np.random.randn(3, 1)
-
-    parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
-    grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
-
-    return parameters, grads, learning_rate
-
-
-def random_mini_batches_test_case():
-    np.random.seed(1)
-    mini_batch_size = 64
-    X = np.random.randn(12288, 148)
-    Y = np.random.randn(1, 148) < 0.5
-    return X, Y, mini_batch_size
+# def update_parameters_with_gd_test_case():
+#     np.random.seed(1)
+#     learning_rate = 0.01
+#     W1 = np.random.randn(2, 3)
+#     b1 = np.random.randn(2, 1)
+#     W2 = np.random.randn(3, 3)
+#     b2 = np.random.randn(3, 1)
+#
+#     dW1 = np.random.randn(2, 3)
+#     db1 = np.random.randn(2, 1)
+#     dW2 = np.random.randn(3, 3)
+#     db2 = np.random.randn(3, 1)
+#
+#     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
+#     grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
+#
+#     return parameters, grads, learning_rate
 
 
-def initialize_velocity_test_case():
-    np.random.seed(1)
-    W1 = np.random.randn(2, 3)
-    b1 = np.random.randn(2, 1)
-    W2 = np.random.randn(3, 3)
-    b2 = np.random.randn(3, 1)
-    parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
-    return parameters
+# def random_mini_batches_test_case():
+#     np.random.seed(1)
+#     mini_batch_size = 64
+#     X = np.random.randn(12288, 148)
+#     Y = np.random.randn(1, 148) < 0.5
+#     return X, Y, mini_batch_size
 
 
-def update_parameters_with_momentum_test_case():
-    np.random.seed(1)
-    W1 = np.random.randn(2, 3)
-    b1 = np.random.randn(2, 1)
-    W2 = np.random.randn(3, 3)
-    b2 = np.random.randn(3, 1)
-
-    dW1 = np.random.randn(2, 3)
-    db1 = np.random.randn(2, 1)
-    dW2 = np.random.randn(3, 3)
-    db2 = np.random.randn(3, 1)
-    parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
-    grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
-    v = {'dW1': np.array([[0., 0., 0.],
-                          [0., 0., 0.]]), 'dW2': np.array([[0., 0., 0.],
-                                                           [0., 0., 0.],
-                                                           [0., 0., 0.]]), 'db1': np.array([[0.],
-                                                                                            [0.]]),
-         'db2': np.array([[0.],
-                          [0.],
-                          [0.]])}
-    return parameters, grads, v
+# def initialize_velocity_test_case():
+#     np.random.seed(1)
+#     W1 = np.random.randn(2, 3)
+#     b1 = np.random.randn(2, 1)
+#     W2 = np.random.randn(3, 3)
+#     b2 = np.random.randn(3, 1)
+#     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
+#     return parameters
 
 
-def initialize_adam_test_case():
-    np.random.seed(1)
-    W1 = np.random.randn(2, 3)
-    b1 = np.random.randn(2, 1)
-    W2 = np.random.randn(3, 3)
-    b2 = np.random.randn(3, 1)
-    parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
-    return parameters
+# def update_parameters_with_momentum_test_case():
+#     np.random.seed(1)
+#     W1 = np.random.randn(2, 3)
+#     b1 = np.random.randn(2, 1)
+#     W2 = np.random.randn(3, 3)
+#     b2 = np.random.randn(3, 1)
+#
+#     dW1 = np.random.randn(2, 3)
+#     db1 = np.random.randn(2, 1)
+#     dW2 = np.random.randn(3, 3)
+#     db2 = np.random.randn(3, 1)
+#     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
+#     grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
+#     v = {'dW1': np.array([[0., 0., 0.],
+#                           [0., 0., 0.]]), 'dW2': np.array([[0., 0., 0.],
+#                                                            [0., 0., 0.],
+#                                                            [0., 0., 0.]]), 'db1': np.array([[0.],
+#                                                                                             [0.]]),
+#          'db2': np.array([[0.],
+#                           [0.],
+#                           [0.]])}
+#     return parameters, grads, v
+#
+
+# def initialize_adam_test_case():
+#     np.random.seed(1)
+#     W1 = np.random.randn(2, 3)
+#     b1 = np.random.randn(2, 1)
+#     W2 = np.random.randn(3, 3)
+#     b2 = np.random.randn(3, 1)
+#     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
+#     return parameters
 
 
-def update_parameters_with_adam_test_case():
-    np.random.seed(1)
-    v, s = ({'dW1': np.array([[0., 0., 0.], [0., 0., 0.]]),
-             'dW2': np.array([[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]]),
-             'db1': np.array([[0.], [0.]]),
-             'db2': np.array([[0.], [0.], [0.]])},
-            {'dW1': np.array([[0., 0., 0.], [0., 0., 0.]]),
-             'dW2': np.array([[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]]),
-             'db1': np.array([[0.], [0.]]),
-             'db2': np.array([[0.], [0.], [0.]])})
-    W1 = np.random.randn(2, 3)
-    b1 = np.random.randn(2, 1)
-    W2 = np.random.randn(3, 3)
-    b2 = np.random.randn(3, 1)
-
-    dW1 = np.random.randn(2, 3)
-    db1 = np.random.randn(2, 1)
-    dW2 = np.random.randn(3, 3)
-    db2 = np.random.randn(3, 1)
-
-    parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
-    grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
-
-    return parameters, grads, v, s
+# def update_parameters_with_adam_test_case():
+#     np.random.seed(1)
+#     v, s = ({'dW1': np.array([[0., 0., 0.], [0., 0., 0.]]),
+#              'dW2': np.array([[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]]),
+#              'db1': np.array([[0.], [0.]]),
+#              'db2': np.array([[0.], [0.], [0.]])},
+#             {'dW1': np.array([[0., 0., 0.], [0., 0., 0.]]),
+#              'dW2': np.array([[0., 0., 0.], [0., 0., 0.], [0., 0., 0.]]),
+#              'db1': np.array([[0.], [0.]]),
+#              'db2': np.array([[0.], [0.], [0.]])})
+#     W1 = np.random.randn(2, 3)
+#     b1 = np.random.randn(2, 1)
+#     W2 = np.random.randn(3, 3)
+#     b2 = np.random.randn(3, 1)
+#
+#     dW1 = np.random.randn(2, 3)
+#     db1 = np.random.randn(2, 1)
+#     dW2 = np.random.randn(3, 3)
+#     db2 = np.random.randn(3, 1)
+#
+#     parameters = {"W1": W1, "b1": b1, "W2": W2, "b2": b2}
+#     grads = {"dW1": dW1, "db1": db1, "dW2": dW2, "db2": db2}
+#
+#     return parameters, grads, v, s
 
 def update_parameters_with_gd(parameters, grads, learning_rate):
     """
@@ -295,6 +295,7 @@ def update_parameters_with_adam(parameters, grads, v, s, t, learning_rate=0.01,
         parameters["b" + str(l + 1)] = parameters["b" + str(l + 1)] - learning_rate * (
                     v_corrected["db" + str(l + 1)] / (np.sqrt(s_corrected["db" + str(l + 1)]) + epsilon))
 
+    print("update_parameters_with_adam W1.shape",parameters["W1"].shape)
     return parameters, v, s
 
 
@@ -322,6 +323,7 @@ def model(X, Y, layer_dims, optimizer, learning_rate=0.0007, mini_batch_size=64,
     seed = 10
 
     parameters = initialize_parameters(layer_dims)
+    print("初始化， parameters['W1'].shape = ", parameters["W1"].shape)
 
     if optimizer == "gd":
         pass
@@ -334,8 +336,12 @@ def model(X, Y, layer_dims, optimizer, learning_rate=0.0007, mini_batch_size=64,
         seed = seed + 1
         minibatches = random_mini_batches(X, Y, mini_batch_size, seed)
 
-        for minibatch in minibatches:
+        for j, minibatch in enumerate(minibatches):
             (minibatch_X, minibatch_Y) = minibatch
+
+            print("第 {} 个minibatch ---- minibatch_X.shape = ".format(j), minibatch_X.shape)
+            print("第 {} 个minibatch ---- parameters['W1'].shape=".format(j), parameters["W1"].shape)
+
             a3, caches = forward_propagation(minibatch_X, parameters)
 
             cost = compute_cost(a3, minibatch_Y)
@@ -350,6 +356,7 @@ def model(X, Y, layer_dims, optimizer, learning_rate=0.0007, mini_batch_size=64,
                 t = t + 1
                 parameters, v, s = update_parameters_with_adam(parameters, grads, v, s, t, learning_rate,
                                                                beta1, beta2, epsilon)
+            print("parameters['b1']", parameters['b1'])
 
         if print_cost and i % 1000 == 0:
             print("Cost after epoch %i: %f" % (i, cost))
@@ -433,11 +440,11 @@ if __name__ == '__main__':
     # axes.set_ylim([-1, 1.5])
     # plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
     #
-    layers_dims = [train_X.shape[0], 5, 2, 1]
-    parameters = model(train_X, train_Y, layers_dims, optimizer="adam")
-
-    # Predict
-    predictions = predict(train_X, train_Y, parameters)
+    # layers_dims = [train_X.shape[0], 5, 2, 1]
+    # parameters = model(train_X, train_Y, layers_dims, optimizer="adam")
+    #
+    # # Predict
+    # predictions = predict(train_X, train_Y, parameters)
 
     # Plot decision boundary
     # plt.title("Model with Momentum optimization")
@@ -445,4 +452,26 @@ if __name__ == '__main__':
     # axes.set_xlim([-1.5, 2.5])
     # axes.set_ylim([-1, 1.5])
     # plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
+    # layers_dims = [train_X.shape[0], 5, 2, 1]
+    # parameters = model(train_X, train_Y, layers_dims, beta=0.9, optimizer="momentum")
+    #
+    # # Predict
+    # predictions = predict(train_X, train_Y, parameters)
 
+    # Plot decision boundary
+    # plt.title("Model with Momentum optimization")
+    # axes = plt.gca()
+    # axes.set_xlim([-1.5, 2.5])
+    # axes.set_ylim([-1, 1.5])
+    # # plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
+    layers_dims = [train_X.shape[0], 5, 2, 1]
+    parameters = model(train_X, train_Y, layers_dims, optimizer="adam")
+
+    # Predict
+    predictions = predict(train_X, train_Y, parameters)
+
+    # # Plot decision boundary
+    # plt.title("Model with Adam optimization")
+    # axes = plt.gca()
+    # axes.set_xlim([-1.5, 2.5])
+    # axes.set_ylim([-1, 1.5])
