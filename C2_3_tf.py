@@ -99,3 +99,8 @@ def predict(X, parameters):
     prediction = sess.run(p, feed_dict = {x: X})
 
     return prediction
+
+if __name__ == '__main__':
+    hello = tf.constant("Hello, Tensorflow!")
+    sess = tf.Session()
+    print(sess.run(hello))
