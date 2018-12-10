@@ -25,7 +25,7 @@ def zero_pad(X, pad):
 def conv_single_step(a_slice_prev, W, b):
     """
     :param a_slice_prev:
-    :param W:
+    W -- Weight parameters contained in a window - matrix of shape (f, f, n_C_prev)
     :param b:
     :return:
     """
@@ -63,10 +63,10 @@ def conv_forward(A_prev, W, b, hparameters):
 
     A_prev_pad = zero_pad(A_prev, pad)
 
-    for i in range(m):
+    for i in range(m): # 遍历m个样本
         a_prev_pad = A_prev_pad[i, :, :, :]
-        for h in range(n_H):
-            for w in range(n_W):
+        for h in range(n_H): # 遍历垂直方向
+            for w in range(n_W): # 遍历水平方向
                 for c in range(n_C):
 
                     vert_start = stride * h
@@ -74,9 +74,11 @@ def conv_forward(A_prev, W, b, hparameters):
                     horiz_start = stride * w
                     horiz_end = horiz_start + f
 
-                    a_slice_prev = a_prev_pad[vert_start:vert_end, horiz_start:horiz_end, :]
+                    a_slice_prev = a_prev_pad[vert_start:vert_end,
+                                   horiz_start:horiz_end, :]
 
-                    Z[i, h, w, c] = conv_single_step(a_slice_prev, W[:, :, :, c], b[:, :, :, c])
+                    Z[i, h, w, c] = conv_single_step(a_slice_prev, W[:, :, :, c],
+                                                     b[:, :, :, c])
 
 
     assert Z.shape == (m, n_H, n_W, n_C)
@@ -86,7 +88,51 @@ def conv_forward(A_prev, W, b, hparameters):
     return Z, cache
 
 
+def pool_forward(A_prev, hparameters, mode="max"):
+    """
+    Implements the forward pass of the pooling layer
 
+    Arguments:
+    A_prev -- Input data, numpy array of shape (m, n_H_prev, n_W_prev, n_C_prev)
+    hparameters -- python dictionary containing "f" and "stride"
+    mode -- the pooling mode you would like to use, defined as a string ("max" or "average")
+
+    Returns:
+    A -- output of the pool layer, a numpy array of shape (m, n_H, n_W, n_C)
+    cache -- cache used in the backward pass of the pooling layer, contains the input and hparameters
+    """
+    (m, n_H_prev, n_W_prev, n_C_prev) = A_prev.shape
+    f = hparameters['f']
+    stride = hparameters["stride"]
+
+    n_H = int(1 + (n_H_prev - f) / stride)
+    n_W = int(1 + (n_W_prev - f) / stride)
+    n_C = n_C_prev
+
+    A = np.zeros((m, n_H, n_W, n_C))
+
+    for i in range(m):
+        for h in range(n_H):
+            for w in range(n_W):
+                for c in range(n_C):
+
+                    vert_start = h * stride
+                    vert_end = vert_start + f
+                    horiz_start = w * stride
+                    horiz_end = horiz_start + f
+
+                    a_prev_slice = A_prev[i, vert_start:vert_end, horiz_start:horiz_end , c]
+
+                    if mode == "max":
+                        A[i, h, w, c] = np.max(a_prev_slice)
+                    elif mode == "average":
+                        A[i, h, w, c] = np.mean(a_prev_slice)
+
+    cache = (A_prev, hparameters)
+
+    assert A.shape == (m, n_H, n_W, n_C)
+
+    return A, cache
 
 
 
@@ -114,15 +160,27 @@ if __name__ == '__main__':
     #
     # Z = conv_single_step(a_slice_prev, W, b)
     # print("Z =", Z)
+
+    # np.random.seed(1)
+    # A_prev = np.random.randn(10, 4, 4, 3)
+    # W = np.random.randn(2, 2, 3, 8)
+    # b = np.random.randn(1, 1, 1, 8)
+    # hparameters = {"pad": 2,
+    #                "stride": 2}
+    #
+    # Z, cache_conv = conv_forward(A_prev, W, b, hparameters)
+    # print("Z's mean =", np.mean(Z))
+    # print("Z[3,2,1] =", Z[3, 2, 1])
+    # print("cache_conv[0][1][2][3] =", cache_conv[0][1][2][3])
+
     np.random.seed(1)
-    A_prev = np.random.randn(10, 4, 4, 3)
-    W = np.random.randn(2, 2, 3, 8)
-    b = np.random.randn(1, 1, 1, 8)
-    hparameters = {"pad": 2,
-                   "stride": 2}
+    A_prev = np.random.randn(2, 4, 4, 3)
+    hparameters = {"stride": 2, "f": 3}
 
-    Z, cache_conv = conv_forward(A_prev, W, b, hparameters)
-    print("Z's mean =", np.mean(Z))
-    print("Z[3,2,1] =", Z[3, 2, 1])
-    print("cache_conv[0][1][2][3] =", cache_conv[0][1][2][3])
-
+    A, cache = pool_forward(A_prev, hparameters)
+    print("mode = max")
+    print("A =", A)
+    print()
+    A, cache = pool_forward(A_prev, hparameters, mode="average")
+    print("mode = average")
+    print("A =", A)
